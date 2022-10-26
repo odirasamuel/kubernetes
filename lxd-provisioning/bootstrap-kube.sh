@@ -3,6 +3,9 @@
 # This script has been tested on Ubuntu 20.04
 # For other versions of Ubuntu, you might need some tweaking
 
+echo "[TASK 0] Install essential packages"
+apt install -qq -y net-tools curl ssh software-properties-common >/dev/null 2>&1
+
 echo "[TASK 1] Install containerd runtime"
 apt update -qq >/dev/null 2>&1
 apt install -qq -y containerd apt-transport-https >/dev/null 2>&1
@@ -31,11 +34,6 @@ echo "export TERM=xterm" >> /etc/bash.bashrc
 
 echo "[TASK 6] Install additional packages"
 apt install -qq -y net-tools >/dev/null 2>&1
-
-# Hack required to provision K8s v1.15+ in LXC containers
-mknod /dev/kmsg c 1 11
-echo 'mknod /dev/kmsg c 1 11' >> /etc/rc.local
-chmod +x /etc/rc.local
 
 #######################################
 # To be executed only on master nodes #
